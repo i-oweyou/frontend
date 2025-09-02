@@ -1,2 +1,2 @@
-# frontend
+# iOweyou
 Swap debts, not friendships
