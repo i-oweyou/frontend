@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Header from '../../components/Header/Header'
 import BackgroundBubble from '../../components/BackgroundBubble/BackgroundBubble'
@@ -10,10 +11,16 @@ export default function Profile() {
   const navigate = useNavigate()
   const userData = getItemFromLocalStorage('user')
 
+  useEffect(() => {
+    if (!userData) navigate('/login')
+  }, [userData])
+
   function logoutProfile() {
     logout()
     navigate('/')
   }
+
+  if (!userData) return null
 
   return (
     <>
