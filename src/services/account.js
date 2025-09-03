@@ -1,4 +1,7 @@
-import { setItemToLocalStorage } from '../utils/localstorage'
+import {
+  removeItemFromLocalStorage,
+  setItemToLocalStorage,
+} from '../utils/localstorage'
 
 export async function login(username, password) {
   const response = await fetch(
@@ -19,6 +22,7 @@ export async function login(username, password) {
   const resData = await response.json()
 
   setItemToLocalStorage('token', resData?.token)
+  setItemToLocalStorage('user', resData?.account)
   return resData
 }
 
@@ -41,5 +45,11 @@ export async function signup(data) {
   const resData = await response.json()
 
   setItemToLocalStorage('token', resData?.token)
+  setItemToLocalStorage('user', resData?.account)
   return resData
+}
+
+export function logout() {
+  removeItemFromLocalStorage('token')
+  removeItemFromLocalStorage('user')
 }
