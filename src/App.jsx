@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 const Hero = lazy(() => import('./pages/Hero/Hero'))
 const Signup = lazy(() => import('./pages/Signup/Signup'))
 const Login = lazy(() => import('./pages/Login/Login'))
+const Profile = lazy(() => import('./pages/Profile/Profile'))
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'))
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/" element={<Hero />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/me" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import BackgroundBubble from '../../components/BackgroundBubble/BackgroundBubble'
 import { login } from '../../services/account'
+import { getItemFromLocalStorage } from '../../utils/localstorage'
 import logo from '../../assets/logo/ioweyou_transparent.webp'
 
 export default function Login() {
@@ -11,6 +12,12 @@ export default function Login() {
   })
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const navigate = useNavigate()
+  const userData = getItemFromLocalStorage('user')
+
+  useEffect(() => {
+    if (userData) navigate('/me')
+  }, [userData])
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -25,12 +32,10 @@ export default function Login() {
       setError('')
 
       const loggedIn = await login(form.username, form.password)
-      if (loggedIn) window.location.href = '/'
+      if (loggedIn) navigate('/')
     } catch (error) {
       setSubmitting(false)
       setError(error.message)
-    } finally {
-      setSubmitting(false)
     }
   }
 
@@ -91,14 +96,12 @@ export default function Login() {
               <p className="text-red-500 text-sm text-center">{error}</p>
             )}
 
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-              >
-                Log in
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white cursor-pointer hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            >
+              Log in
+            </button>
 
             <div className="text-center text-gray-100">
               Do not have account?{' '}

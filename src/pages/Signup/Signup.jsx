@@ -1,7 +1,8 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import BackgroundBubble from '../../components/BackgroundBubble/BackgroundBubble'
 import { signup } from '../../services/account'
+import { getItemFromLocalStorage } from '../../utils/localstorage'
 import logo from '../../assets/logo/ioweyou_transparent.webp'
 
 export default function Signup() {
@@ -14,6 +15,12 @@ export default function Signup() {
   })
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
+  const navigate = useNavigate()
+  const userData = getItemFromLocalStorage('user')
+
+  useEffect(() => {
+    if (userData) navigate('/me')
+  }, [userData])
 
   function handleChange(e) {
     const { name, value } = e.target
@@ -39,12 +46,10 @@ export default function Signup() {
       }
 
       const signed = await signup(signupData)
-      if (signed) window.location.href = '/'
+      if (signed) navigate('/')
     } catch (error) {
       setSubmitting(false)
       setError(error.message)
-    } finally {
-      setSubmitting(false)
     }
   }
 
@@ -170,14 +175,12 @@ export default function Signup() {
 
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-          <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-            >
-              Sign up
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white cursor-pointer hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+          >
+            Sign up
+          </button>
 
           <div className="text-center text-gray-100">
             Already have account?{' '}
