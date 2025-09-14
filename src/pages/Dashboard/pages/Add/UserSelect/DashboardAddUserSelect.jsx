@@ -23,7 +23,7 @@ export default function DashboardAddUserSelect() {
         setUsers(data)
       })
     },
-    [setDebt, startTransition]
+    [startTransition]
   )
 
   return (
