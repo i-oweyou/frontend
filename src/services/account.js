@@ -5,7 +5,7 @@ import {
 
 export async function login(username, password) {
   const response = await fetch(
-    import.meta.env.VITE_BASE_API + '/account/login',
+    `${import.meta.env.VITE_BASE_API}/account/login`,
     {
       method: 'POST',
       headers: {
@@ -15,11 +15,11 @@ export async function login(username, password) {
     }
   )
 
-  if (!response.ok) {
-    throw new Error('Login failed')
-  }
-
   const resData = await response.json()
+
+  if (!response.ok) {
+    throw new Error(resData.error || 'Something went wrong')
+  }
 
   setItemToLocalStorage('token', resData?.token)
   setItemToLocalStorage('user', resData?.account)
@@ -28,7 +28,7 @@ export async function login(username, password) {
 
 export async function signup(data) {
   const response = await fetch(
-    import.meta.env.VITE_BASE_API + '/account/signup',
+    `${import.meta.env.VITE_BASE_API}/account/signup`,
     {
       method: 'POST',
       headers: {
@@ -38,11 +38,11 @@ export async function signup(data) {
     }
   )
 
-  if (!response.ok) {
-    throw new Error('Signup failed')
-  }
-
   const resData = await response.json()
+
+  if (!response.ok) {
+    throw new Error(resData.error || 'Something went wrong')
+  }
 
   setItemToLocalStorage('token', resData?.token)
   setItemToLocalStorage('user', resData?.account)
