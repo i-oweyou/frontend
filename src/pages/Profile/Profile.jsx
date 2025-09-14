@@ -25,7 +25,7 @@ export default function Profile() {
   return (
     <>
       <Header />
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex flex-1 items-center justify-center">
         <div className="p-8 overflow-hidden rounded-lg shadow-md border border-gray-200 w-full max-w-md">
           <div className="relative isolate flex flex-col items-center space-y-3">
             <img
@@ -39,10 +39,16 @@ export default function Profile() {
               <h2 className="text-2xl text-white font-semibold">
                 {userData?.name}
                 {userData?.gender === 'male' && (
-                  <FontAwesomeIcon icon={faMars} className="text-blue-500" />
+                  <FontAwesomeIcon
+                    icon={faMars}
+                    className="text-blue-500 text-lg"
+                  />
                 )}
                 {userData?.gender === 'female' && (
-                  <FontAwesomeIcon icon={faVenus} className="text-pink-500" />
+                  <FontAwesomeIcon
+                    icon={faVenus}
+                    className="text-pink-500 text-lg"
+                  />
                 )}
               </h2>
               <span className="text-sm text-gray-400">

@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+:root {
+  color-scheme: light dark;
+}
+
 *,
 *::before,
 *::after {
@@ -16,4 +20,5 @@ html,
 body,
 #root {
   height: 100%;
+  background-color: light-dark(#ffffff, #101828);
 }
