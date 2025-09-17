@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { DashboardAddContext } from '../DashboardAddContext'
 
 export default function DashboardAddHeader() {
-  const { stages, setStages } = useContext(DashboardAddContext)
+  const { sending, stages, setStages } = useContext(DashboardAddContext)
   const { current, stages: stageList } = stages
 
   const goPrevious = () => {
@@ -15,7 +15,7 @@ export default function DashboardAddHeader() {
 
   return (
     <div className="flex items-center p-6">
-      <div className="flex gap-3">
+      <div className="flex gap-3" disabled={sending}>
         <Link
           to="/dashboard"
           className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-full shadow-lg transition-colors"

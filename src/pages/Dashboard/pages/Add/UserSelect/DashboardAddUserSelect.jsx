@@ -8,11 +8,10 @@ import { faMars, faVenus } from '@fortawesome/free-solid-svg-icons'
 
 export default function DashboardAddUserSelect() {
   const [isPending, startTransition] = useTransition()
-  const { setDebt } = useContext(DashboardAddContext)
   const [users, setUsers] = useState([])
 
   const searchUser = useCallback(
-    function (value) {
+    (value) => {
       if (!value) {
         setUsers([])
         return

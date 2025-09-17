@@ -23,11 +23,21 @@ export default function DashboardAdd() {
     paymentDate: null,
   })
   const [borrower, setBorrower] = useState(null)
+  const [sending, setSending] = useState(false)
 
   return (
     <>
       <DashboardAddContext.Provider
-        value={{ debt, setDebt, stages, setStages, borrower, setBorrower }}
+        value={{
+          debt,
+          setDebt,
+          stages,
+          setStages,
+          borrower,
+          setBorrower,
+          sending,
+          setSending,
+        }}
       >
         <DashboardAddHeader />
         <div className="flex justify-center">
