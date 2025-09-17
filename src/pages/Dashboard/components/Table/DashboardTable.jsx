@@ -1,24 +1,9 @@
-export default function DashboardTable() {
-  const rows = [
-    {
-      name: 'cdMQo6F5bHVZSbKnTB5I',
-      createdAt: '2025-09-10',
-      paymentDate: '2025-09-20',
-      amount: '50k',
-    },
-    {
-      name: 'John Doe',
-      createdAt: '2025-08-15',
-      paymentDate: '2025-09-25',
-      amount: '30k',
-    },
-    {
-      name: 'Jane Smith',
-      createdAt: '2025-07-28',
-      paymentDate: '2025-09-18',
-      amount: '75k',
-    },
-  ]
+import { useState } from 'react'
+import DashboardTableCard from './DashboardTableCard/DashboardTableCard'
+import { isoToYMD } from '../../utils/utils'
+
+export default function DashboardTable({ tableData }) {
+  const [dialog, setDialog] = useState({ debt: {}, opened: false })
 
   return (
     <>
@@ -30,7 +15,7 @@ export default function DashboardTable() {
           <div>Amount</div>
         </div>
         <div className="flex flex-col gap-1">
-          {rows.map((row, idx) => (
+          {tableData.map((debt, idx) => (
             <div
               key={idx}
               className={`grid grid-cols-1 md:grid-cols-4 gap-2 p-3 rounded-lg cursor-pointer ${
@@ -38,15 +23,23 @@ export default function DashboardTable() {
                   ? 'dark:bg-gray-600 md:hover:bg-gray-700'
                   : 'bg-transparent'
               } hover:bg-gray-800 transition-colors`}
+              onClick={() => setDialog({ debt, opened: true })}
             >
-              <div className="break-words md:break-normal">{row.name}</div>
-              <div>{row.createdAt}</div>
-              <div>{row.paymentDate}</div>
-              <div>{row.amount}</div>
+              <div className="break-words md:break-normal">
+                {debt?.name || 'Loading...'}
+              </div>
+              <div>{isoToYMD(debt?.createdAt)}</div>
+              <div>{debt?.paymentDate}</div>
+              <div>{debt?.amount}</div>
             </div>
           ))}
         </div>
       </div>
+      <DashboardTableCard
+        debt={dialog.debt}
+        open={dialog.opened}
+        onClose={() => setDialog({ debt: {}, opened: false })}
+      />
     </>
   )
 }

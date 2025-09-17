@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import DashboardDebtInfo from '../../../components/Info/DashboardDebtInfo'
 import { DashboardAddContext } from '../DashboardAddContext'
 import { giveDebt } from '../../../../../services/debt'
 import { getItemFromLocalStorage } from '../../../../../utils/localstorage'
@@ -11,10 +12,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 export default function DashboardAddSend() {
-  const [sending, setSending] = useState(false)
   const [error, setError] = useState('')
   const user = getItemFromLocalStorage('user')
-  const { debt, borrower } = useContext(DashboardAddContext)
+  const { debt, sending, setSending, borrower } =
+    useContext(DashboardAddContext)
   const navigate = useNavigate()
 
   async function send() {
@@ -38,7 +39,9 @@ export default function DashboardAddSend() {
           className="text-center text-3xl"
         />
         <UserCard user={borrower} />
-        <DebtInfo />
+        <DashboardDebtInfo
+          debt={{ ...debt, createdAt: new Date().toISOString() }}
+        />
         {error && <p className="text-red-500 text-sm">{error}</p>}
       </div>
       <div
@@ -70,30 +73,5 @@ function UserCard({ user }) {
         <span className="text-sm text-gray-400">@{user?.username}</span>
       </div>
     </>
-  )
-}
-
-function DebtInfo() {
-  const { debt } = useContext(DashboardAddContext)
-
-  return (
-    <div className="flex flex-col w-full rounded-md bg-white/5 px-4 py-8 text-base text-white sm:text-sm/6 space-y-2">
-      <div className="flex items-baseline">
-        <span>Amount</span>
-        <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
-        <span>{debt?.amount} so'm</span>
-      </div>
-      <div className="flex items-baseline">
-        <span>Payment date</span>
-        <span className="flex-1 border-b border-dotted border-gray-600 mx-2"></span>
-        <span>{debt?.paymentDate || 'Unknown'}</span>
-      </div>
-      <div className="flex flex-col">
-        <span>Description</span>
-        <p className="text-sm text-gray-400">
-          {debt?.description || 'No description provided'}
-        </p>
-      </div>
-    </div>
   )
 }
